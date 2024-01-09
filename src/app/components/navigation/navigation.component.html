@@ -1,23 +1,27 @@
-<nav class="navbar navbar-light">
-    <div class="container">
-        <a class="navbar-brand" routerLink="/">Bikes</a>
-        @if (!isLoggedIn()) {
-        <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" routerLink="/login">Login</a>
-        </li>
+<mat-toolbar color="primary">
+    <mat-toolbar-row class="gap">
+        @if (!loggedIn()) {
+        <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <span class="spacer"></span>
+        <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
         } @else {
-        <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']">Dashboard</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/bikes']">Bikes</a>
-        </li>
-        <li class="nav-item">
-            <button (click)="logout()">Logout</button>
-        </li>
+        <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a mat-button [matMenuTriggerFor]="bikesmenu" [ngClass]="{ 'active': list.isActive || add.isActive }">Bikes</a>
+        <span class="spacer"></span>
+        <mat-menu #bikesmenu="matMenu" [overlapTrigger]="false">
+            <a mat-menu-item routerLink="/bikes" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                #list="routerLinkActive">
+                <mat-icon>directions_bike</mat-icon>
+                <span>List</span>
+            </a>
+            <a mat-menu-item routerLink="/bikes/new" routerLinkActive="active" #add="routerLinkActive">
+                <mat-icon>add</mat-icon>
+                <span>Add</span>
+            </a>
+        </mat-menu>
+        <a mat-button (click)="logout()">
+            <mat-icon>logout</mat-icon>
+        </a>
         }
-    </div>
-</nav>
+    </mat-toolbar-row>
+</mat-toolbar>

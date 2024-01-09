@@ -1,16 +1,17 @@
 import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '@shared/auth/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [MatButtonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export default class LoginComponent {
-  authService$ = inject(AuthService);
+  readonly #authService = inject(AuthService);
   login() {
-    this.authService$.login();
+    this.#authService.login();
   }
 }

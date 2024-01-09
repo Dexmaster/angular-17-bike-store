@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import env from '@src/environments/environments'
+import env from '@src/environments/environments';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalStorageService {
-
-  constructor() { }
+  constructor() {}
 
   setItem(key: string, value: unknown) {
     localStorage.setItem(`${env.APP_PREFIX}_${key}`, JSON.stringify(value));

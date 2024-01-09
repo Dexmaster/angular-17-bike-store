@@ -1,3 +1,5 @@
 <app-navigation></app-navigation>
-<h1>Hello, {{title}}</h1>
-<router-outlet></router-outlet>
+
+<div class="content" [@routeAnimations]="outlet.isActivated && outlet.activatedRoute.routeConfig?.data?.['title']">
+    <router-outlet  #outlet="outlet"></router-outlet>
+</div>
