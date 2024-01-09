@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { AuthService } from '@shared/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +9,8 @@ import { Component, inject } from '@angular/core';
   styleUrl: './login.component.scss'
 })
 export default class LoginComponent {
+  authService$ = inject(AuthService);
   login() {
+    this.authService$.login();
   }
 }

@@ -1,6 +1,7 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '@shared/auth/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,10 +11,13 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navigation.component.scss'
 })
 export class NavigationComponent {
+  authService$ = inject(AuthService);
   
   logout() {
+    this.authService$.logout();
   }
 
   isLoggedIn() {
+    return this.authService$.isLoggedIn();
   }
 }
