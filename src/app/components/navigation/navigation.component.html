@@ -1,0 +1,23 @@
+<nav class="navbar navbar-light">
+    <div class="container">
+        <a class="navbar-brand" routerLink="/">Bikes</a>
+        @if (!isLoggedIn()) {
+        <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="/login">Login</a>
+        </li>
+        } @else {
+        <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/bikes']">Bikes</a>
+        </li>
+        <li class="nav-item">
+            <button (click)="logout()">Logout</button>
+        </li>
+        }
+    </div>
+</nav>
