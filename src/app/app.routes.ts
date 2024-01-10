@@ -3,14 +3,6 @@ import { authGuard } from './shared/auth/auth.guard';
 
 export const routes: Routes = [
   {
-    path: 'dashboard',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/dashboard/dashboard.component'),
-    data: {
-      title: 'Dashboard',
-    },
-  },
-  {
     path: 'home',
     loadComponent: () => import('./pages/home/home.component'),
     data: {
@@ -25,6 +17,13 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'register',
+    loadComponent: () => import('./pages/register/register.component'),
+    data: {
+      title: 'Register',
+    },
+  },
+  {
     path: 'bikes',
     canActivate: [authGuard],
     loadChildren: () => import('./pages/bikes/bikes.routes'),
@@ -32,7 +31,7 @@ export const routes: Routes = [
       title: 'Bikes',
     },
   },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: '**',
     canActivate: [authGuard],

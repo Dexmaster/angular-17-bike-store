@@ -1,27 +1,23 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="secondary">
     <mat-toolbar-row class="gap">
+        <a mat-stroked-button routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
         @if (!loggedIn()) {
-        <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        <span class="spacer"></span>
-        <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
+            <span class="spacer"></span>
+            <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
+            <a mat-stroked-button routerLink="/register" routerLinkActive="active">Register</a>
         } @else {
-        <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-        <a mat-button [matMenuTriggerFor]="bikesmenu" [ngClass]="{ 'active': list.isActive || add.isActive }">Bikes</a>
-        <span class="spacer"></span>
-        <mat-menu #bikesmenu="matMenu" [overlapTrigger]="false">
-            <a mat-menu-item routerLink="/bikes" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-                #list="routerLinkActive">
+            <a mat-stroked-button routerLink="/bikes" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            #list="routerLinkActive">
                 <mat-icon>directions_bike</mat-icon>
-                <span>List</span>
+                <span>Bikes</span>
             </a>
-            <a mat-menu-item routerLink="/bikes/new" routerLinkActive="active" #add="routerLinkActive">
-                <mat-icon>add</mat-icon>
-                <span>Add</span>
+            <span class="spacer"></span>
+            <span>Hello, {{name()}}</span>
+            <img class="avatar" [src]="this.gravatar() | async" />
+            <a mat-stroked-button (click)="logout()">
+                Logout
+                <mat-icon>logout</mat-icon>
             </a>
-        </mat-menu>
-        <a mat-button (click)="logout()">
-            <mat-icon>logout</mat-icon>
-        </a>
         }
     </mat-toolbar-row>
 </mat-toolbar>

@@ -5,7 +5,6 @@ export type UserAuth = {
 
 export type User = UserAuth & {
     name: string;
-    github: string;
 };
 
 export interface AuthResponse {

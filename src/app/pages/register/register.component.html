@@ -1,0 +1,51 @@
+<mat-card>
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <mat-card-title>
+      <h2>Register</h2>
+    </mat-card-title>
+
+    <mat-card-content>
+      @if (this.authError()) {
+      <mat-error> {{ this.authError() }} </mat-error>
+      }
+      <mat-form-field>
+        <input type="email" matInput placeholder="Email" formControlName="email">
+        @if (this.registerForm.get('email')?.hasError('required')) {
+        <mat-error>Email is required</mat-error>
+        }
+        @if (this.registerForm.get('email')?.hasError('email')) {
+        <mat-error>Email must be a valid Email</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="text" matInput placeholder="Name" formControlName="name">
+        @if (this.registerForm.get('name')?.hasError('required')) {
+        <mat-error>First Name is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="password" matInput placeholder="Password" formControlName="password">
+        @if (this.registerForm.get('password')?.hasError('required')) {
+        <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="password" matInput placeholder="Password Confirmation" formControlName="passwordConfirm">
+        @if (this.registerForm.get('passwordConfirm')?.hasError('required')) {
+        <mat-error>Password Confirmation is required</mat-error>
+        }
+      </mat-form-field>
+
+      @if (this.registerForm.get('password')?.touched && this.registerForm.hasError('passwordsNotMatching')) {
+      <mat-error>Passwords are not matching!</mat-error>
+      }
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [disabled]="!registerForm.valid" type="submit">Register</button>
+        <a mat-flat-button routerLink="/login">Go to Login</a>
+      </mat-card-actions>
+    </mat-card-content>
+  </form>
+</mat-card>

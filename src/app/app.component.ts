@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from '@components/navigation/navigation.component';
 import { routeAnimations } from '@shared/animations/route.animations';
-import env from '@src/environments/environments';
+import { environment } from '@src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -13,5 +13,5 @@ import env from '@src/environments/environments';
   animations: [routeAnimations]
 })
 export class AppComponent {
-  title = env.TITLE;
+  title = environment.TITLE;
 }

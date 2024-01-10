@@ -1,11 +1,13 @@
 import { NgIf } from '@angular/common';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,32 +31,48 @@ import { tap } from 'rxjs/operators';
     MatInputModule,
     NgIf,
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
 })
-export default class LoginComponent {
+export default class RegisterComponent {
   readonly #destroyRef = inject(DestroyRef);
   readonly #authService = inject(AuthService);
   readonly authError = signal('');
-  loginForm: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required]),
-  });
+  registerForm: FormGroup = new FormGroup(
+    {
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      name: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required]),
+      passwordConfirm: new FormControl(null, [Validators.required]),
+    },
+    { validators: this.passwordsMatching }
+  );
+
+  passwordsMatching(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const passwordConfirm = control.get('passwordConfirm')?.value;
+
+    if (password !== passwordConfirm) {
+      return { passwordsNotMatching: true };
+    }
+
+    return null;
+  }
 
   onAuthError(message: string) {
     return (error?: Error) =>
       this.authError.set(`${message} ${error?.message ?? ''}`);
   }
 
-  login() {
-    if (!this.loginForm.valid) {
+  register() {
+    if (!this.registerForm.valid) {
       return;
     }
     return this.#authService
-      .login(this.loginForm.value)
+      .register(this.registerForm.value)
       .pipe(
         takeUntilDestroyed(this.#destroyRef),
-        tap({ error: this.onAuthError('Failed to login.') })
+        tap({ error: this.onAuthError('Failed to register.') })
       )
       .subscribe();
   }

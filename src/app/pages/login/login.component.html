@@ -1,1 +1,32 @@
-<p><button mat-raised-button color="primary" (click)="login()">Login</button></p>
+<mat-card>
+      
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-card-title><h2>Login</h2></mat-card-title>
+      <mat-card-content>
+          @if (this.authError()) {
+            <mat-error> {{ this.authError() }} </mat-error>
+          }
+          <mat-form-field>
+            <input type="email" matInput placeholder="Email" formControlName="email">
+            @if (this.loginForm.get('email')?.hasError('required')) {
+              <mat-error>Email is required</mat-error>
+            }
+            @if (this.loginForm.get('email')?.hasError('email')) {
+              <mat-error>Email must be a valid Email</mat-error>
+            }
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input type="password" matInput placeholder="Password" formControlName="password">
+            @if (this.loginForm.get('password')?.hasError('required')) {
+              <mat-error>Password is required</mat-error>
+            }
+          </mat-form-field>
+          <mat-card-actions>
+            <button mat-raised-button color="primary"  [disabled]="!loginForm.valid" type="submit">Login</button>
+            <a mat-flat-button routerLink="/register">Go to Register</a>
+          </mat-card-actions>
+      </mat-card-content>
+      
+    </form>
+    </mat-card>
