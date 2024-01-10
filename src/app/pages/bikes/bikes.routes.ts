@@ -3,7 +3,7 @@ import { Route } from '@angular/router';
 const BikeRoutes: Route[] = [
   {
     path: '',
-    loadComponent: () => import('./bikes.component'),
+    loadComponent: () => import('./bikes-list/bikes-list.component'),
     data: {
       title: 'Bikes-list',
     },

@@ -14,7 +14,7 @@ async function getBikeImage(url) {
   });
 }
 
-for (var id = 1; id <= 50; id++) {
+for (var id = 1; id <= 300; id++) {
   // this slows down generation but if we don't do it image will change on page refresh
   const imageUrl = await getBikeImage(
     "https://source.unsplash.com/1600x900/?bicycle"
@@ -27,12 +27,12 @@ for (var id = 1; id <= 50; id++) {
   database.bikes.push({
     id,
     title,
-    description: faker.lorem.sentences(),
+    description: "", //faker.lorem.sentences(),
     type,
     color,
     manufacturer,
     model,
-    price: faker.commerce.price(),
+    price: faker.number.float({ min: 5, max: 1000, precision: 0.01 }),
     imageUrl,
     quantity: faker.number.int({ min: 3, max: 1500 }),
     rating: faker.number.float({ min: 1, max: 5, precision: 0.01 }),

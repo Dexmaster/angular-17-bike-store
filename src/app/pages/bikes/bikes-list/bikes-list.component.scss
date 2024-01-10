@@ -1,0 +1,36 @@
+mat-card {
+  max-width: 1200px;
+  margin: 2em auto;
+  text-align: center;
+}
+.actions {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
+.bike-img {
+  height: 100px;
+  flex: 1;
+}
+.mat-column-id {
+  max-width: 60px;
+}
+.mat-column-actions {
+  max-width: 90px;
+}
+.mat-column-rating,
+.mat-column-quantity,
+.mat-column-price {
+  max-width: 90px;
+}
+.mat-column-color {
+  max-width: 120px;
+}
+.mat-column-type {
+  max-width: 200px;
+}
+.filter-field {
+  min-width: 300px;
+  max-width: 100%;
+  display: flex;
+}

@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '@shared/auth/auth.service';
+import { SnackbarService } from '@shared/snackbar/snackbar.service';
 import { catchError, throwError } from 'rxjs';
 
 export const httpInterceptor: HttpInterceptorFn = (
@@ -13,6 +14,7 @@ export const httpInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ) => {
   const authService = inject(AuthService);
+  const snack = inject(SnackbarService);
   const authToken = authService.getAuthorizationToken();
 
   // Clone the request and set authorization header.
@@ -24,14 +26,19 @@ export const httpInterceptor: HttpInterceptorFn = (
     catchError((error: HttpErrorResponse) => {
       let errorMsg = '';
       if (error.error instanceof ErrorEvent) {
-        errorMsg = `Client Error: ${error.error.message}`;
+        // Client error
+        errorMsg = `${error.error.message}`;
       } else {
-        errorMsg = `Server Error Code: ${error.status}, Message: ${error.message}`;
+        // Server error
+        errorMsg = `[${error.status}] ${error.message}`;
       }
       // if user gets unauthorised we want to clean credentials
       if (error.status === 401) {
+        errorMsg = '[401] Your authorization session expired.';
         authService.logout();
       }
+      snack.error(errorMsg);
+
       return throwError(() => errorMsg);
     })
   );

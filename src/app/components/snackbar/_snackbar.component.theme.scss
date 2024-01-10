@@ -1,0 +1,19 @@
+@mixin colors($success-color, $error-color, $info-color) {
+  .mat-mdc-snack-bar-container {
+    &.snackbar-success {
+      --mdc-snackbar-container-color: #{$success-color};
+      --mat-mdc-snack-bar-button-color: #fff;
+      --mdc-snackbar-supporting-text-color: #fff;
+    }
+    &.snackbar-error {
+      --mdc-snackbar-container-color: #{$error-color};
+      --mat-mdc-snack-bar-button-color: #fff;
+      --mdc-snackbar-supporting-text-color: #fff;
+    }
+    &.snackbar-info {
+      --mdc-snackbar-container-color: #{$info-color};
+      --mat-mdc-snack-bar-button-color: #fff;
+      --mdc-snackbar-supporting-text-color: #fff;
+    }
+  }
+}

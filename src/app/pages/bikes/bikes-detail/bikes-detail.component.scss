@@ -1,0 +1,20 @@
+mat-card {
+  max-width: 900px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+mat-form-field {
+  display: block;
+}
+
+mat-card-actions {
+  display: grid;
+  gap: 15px;
+  padding: 0;
+}
+
+mat-card-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
