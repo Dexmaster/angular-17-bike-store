@@ -1,0 +1,35 @@
+<mat-card>
+    <mat-card-title>
+        <h2>Weather in {{selectedCity()}}</h2>
+
+    </mat-card-title>
+    <mat-card-content>
+        @if(weatherInfo) {
+            <div class="card-info">
+                @if (weatherCode) {
+                    <img [src]="weatherCode.day.image">
+                    <p>{{weatherCode.day.description}}</p>
+                }
+                <p>{{weatherInfo.current.temperature_2m}} {{weatherInfo.current_units.temperature_2m}}</p>
+
+                <p>Surface pressure: {{weatherInfo.current.surface_pressure}} {{weatherInfo.current_units.surface_pressure}}
+                </p>
+                <p>Relative humidity: {{weatherInfo.current.relativehumidity_2m}}
+                    {{weatherInfo.current_units.relativehumidity_2m}}</p>
+            </div>
+        }
+        @else {
+            <span>Please select city first</span>
+        }
+        <mat-card-actions>
+            <mat-form-field>
+                <mat-label>My City</mat-label>
+                <mat-select [ngModel]="selectedCity()" (ngModelChange)="onCityUpdate($event)" name="city">
+                    @for (city of citiesList; track city.name) {
+                    <mat-option [value]="city.name">{{city.name}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

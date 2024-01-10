@@ -28,6 +28,10 @@ export const httpInterceptor: HttpInterceptorFn = (
       } else {
         errorMsg = `Server Error Code: ${error.status}, Message: ${error.message}`;
       }
+      // if user gets unauthorised we want to clean credentials
+      if (error.status === 401) {
+        authService.logout();
+      }
       return throwError(() => errorMsg);
     })
   );
