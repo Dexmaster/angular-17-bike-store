@@ -1,6 +1,9 @@
-import { Injectable, effect, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthResponse, User, UserAuth } from '@shared/auth/auth.models';
 import { LocalStorageService } from '@shared/local-storage/local-storage.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -8,28 +11,59 @@ import { LocalStorageService } from '@shared/local-storage/local-storage.service
 export class AuthService {
   readonly #router = inject(Router);
   readonly #localStorage = inject(LocalStorageService);
-  readonly #loggedIn = signal(this.#localStorage.getItem('loggedIn', false));
+  readonly #http = inject(HttpClient);
+
+  readonly #user = signal<User | null>(
+    this.#localStorage.getItem('user', null)
+  );
+  readonly #accessToken = signal<string>(
+    this.#localStorage.getItem('accessToken', '')
+  );
+  readonly #loggedIn = computed(() => !!this.#accessToken());
+  readonly #api = 'http://localhost:4208';
+
   constructor() {
     effect(() => {
       if (this.isLoggedIn()) {
-        this.#localStorage.setItem('loggedIn', true);
         this.#router.navigate(['dashboard']);
       } else {
-        this.#localStorage.setItem('loggedIn', false);
         this.#router.navigate(['login']);
       }
     });
+
+    effect(() => {
+      this.#localStorage.setItem('accessToken', this.#accessToken());
+      this.#localStorage.setItem('user', this.#user());
+    });
+  }
+
+  getAuthorizationToken() {
+    return this.#accessToken();
   }
 
   isLoggedIn() {
     return this.#loggedIn();
   }
 
-  login() {
-    this.#loggedIn.set(true);
+  processResponse({ user, accessToken }: AuthResponse) {
+    this.#accessToken.set(accessToken);
+    this.#user.set(user);
+  }
+
+  register({email, password, name, github}: User) {
+    return this.#http
+      .post<AuthResponse>(`${this.#api}/register`, {email, password, name, github})
+      .pipe(tap(this.processResponse.bind(this)));
+  }
+
+  login({email, password}: UserAuth) {
+    return this.#http
+      .post<AuthResponse>(`${this.#api}/login`, {email, password})
+      .pipe(tap(this.processResponse.bind(this)));
   }
 
   logout() {
-    this.#loggedIn.set(false);
+    this.#user.set(null);
+    this.#accessToken.set("");
   }
 }
