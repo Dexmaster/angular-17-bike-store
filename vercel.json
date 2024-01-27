@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run vercel:buildCommand",
+  "devCommand": "npm run vercel:devCommand",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://angular-17-bike-store-api.vercel.app/api/$1"
+    }
+  ]
+}
