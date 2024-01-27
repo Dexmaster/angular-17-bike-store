@@ -1,4 +1,8 @@
 {
-    "/api/users*": "/600/users$1",
-    "/api/bikes*": "/660/bikes$1"
+  "/users*": "/600/users$1",
+  "/bikes*": "/660/bikes$1",
+  "/api/v1/users*": "/600/users$1",
+  "/api/v1/bikes*": "/660/bikes$1",
+  "/api/v1/register": "/register",
+  "/api/v1/login": "/login"
 }

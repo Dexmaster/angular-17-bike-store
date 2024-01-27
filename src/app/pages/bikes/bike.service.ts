@@ -11,7 +11,7 @@ const headers = new HttpHeaders().set('Accept', 'application/json');
 })
 export class BikeService {
   bikeList: Bike[] = [];
-  api = `${environment.API_ENDPOINT}/api/bikes`;
+  api = `${environment.API_ENDPOINT}/bikes`;
   readonly #http = inject(HttpClient);
 
   loading = true;
