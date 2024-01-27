@@ -1,0 +1,17 @@
+{
+  "name": "angular-17-bike-store-api",
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "[ -e ./db.json ] || npm run generate",
+    "generate": "node ./fake.mjs > ./db.json",
+    "server": "json-server --port 4208 --watch ./db.json -m ./node_modules/json-server-auth -r ./routes.json"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4",
+    "json-server-auth": "^2.1.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.0",
+    "request": "^2.88.2"
+  }
+}
