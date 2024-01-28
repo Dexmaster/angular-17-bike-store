@@ -2,24 +2,34 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.9.
 
+## Demo
+
+[Demo](https://angular-17-bike-store.vercel.app/home)
+
 ## Starting up
 
 - Requires Node.js v18+, `.nvmrc` present for version autoload.
 - Clone git repo.
-- Run `npm i`. (during this step if `./server/db.json` doesn't exists it will create it and populate with fake products)
-- Start up server `npm run server`. (Fake api will be at <http://localhost:4208/>)
-- Start up client `ng serve`. (Your UI will be at <http://localhost:4209/>)
-- Without registration we have <http://localhost:4208/home> that gets data from <https://api.open-meteo.com/v1> API.
+- Run `npm i`
+- Start up locally `npm run dev:new`
+- Without registration we have <http://localhost:3000/home> that gets data from <https://api.open-meteo.com/v1> API.
 - Register account. Test login/logout.
 - Test adding/removing bikes.
+
+P.S.
+
+- With v1.x both UI and server are now vercel apps
+- Previous method still works, but server command moved to sub-folder for full separation of UI and server, and server (command `npm run dev:old`)
 
 Libraries used:
 
 - UI (Angular 17, Angular Material)
   - `Angular 17` latest features, standalone components, service injection, signal variables and component importing
   - `Angular Material` theming option and using all native features to create UI
+  - `vercel` for UI deployment
 
 - API (json-server, json-server-auth, @faker-js/faker, request)
+  - `vercel` for API deployment
   - `json-server` has all functions we need for request processing and data storage (data is stored in `./server/db.json`)
   - `json-server-auth` helps with providing levels of access needed to access API (route rules stored in `./server/routes.json`)
   - `@faker-js/faker` is used to generate large amount of specific data
